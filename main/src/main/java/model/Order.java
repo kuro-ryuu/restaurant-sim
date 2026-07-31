@@ -5,8 +5,9 @@ public class Order {
     private ArrayList<MenuItem> MenuItems;
     private boolean orderCompletion = false;
     private MenuItem orderedItem;
+    private int preparedCount = 0;
     
-    public Order() {
+    public Order(Customer customer) {
         this.customer = customer;
         MenuItems = new ArrayList<>();
     }
@@ -18,6 +19,9 @@ public class Order {
     }
     public void addItem(MenuItem item) {
         MenuItems.add(item);
+    }
+    public void completedItemCount() {
+        preparedCount++;
     }
     public void randomItem(int amountOfItems) {
         int itemId = (int)((Math.random() * amountOfItems) + 1);
