@@ -1,19 +1,19 @@
 package model;
 
 public class MenuItem {
-    private String itemName;
+    private static int itemID;
     private int prepTime;
 
-    public String getItemName() {
-        return itemName;
+    public static int getItemID() {
+        return itemID;
     }
 
-    public String getPrepTime() {
-        return Integer.toString(prepTime);
+    public int getPrepTime() {
+        return prepTime;
     }
 
     private MenuItem(String itemName, int prepTime) {
-        this.itemName = itemName;
+        this.itemID = itemID;
         this.prepTime = prepTime;
     }
 }

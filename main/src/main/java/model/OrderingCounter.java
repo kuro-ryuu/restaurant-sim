@@ -15,7 +15,12 @@ public class OrderingCounter {
     public void setbusy(boolean busy) {
         this.busy = busy;
     }
-    
+    public Customer getcurrentCustomer() {
+        return currentCustomer;
+    }
+    public void setcurrentCustomer(Customer currCustomer) {
+        this.currentCustomer = currCustomer;
+    }
 }
 
 // TO DO: id, busy, currentCustomer

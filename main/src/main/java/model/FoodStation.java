@@ -8,7 +8,10 @@ public class FoodStation {
     public FoodStation() {
         this.id = id;
     }
-    public void addCustomer() {
+    public void changeState() {
+        this.busy = !busy;
+    }
+    public void prepareItem() {
         
     }
 }

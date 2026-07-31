@@ -1,23 +1,31 @@
 package model;
-import java.util.PriorityQueue;
-
+import java.util.ArrayList;
 public class Order {
-    private double id;
-    private PriorityQueue<Customer> orderList;
+    private Customer customer;
+    private ArrayList<MenuItem> MenuItems;
     private boolean orderCompletion = false;
+    private MenuItem orderedItem;
+    
     public Order() {
-        this.id = id;
-        orderList = new PriorityQueue<Customer>();
-        this.orderCompletion = orderCompletion;
+        this.customer = customer;
+        MenuItems = new ArrayList<>();
     }
-    public double getId() {
-        return id;
+    public void changeState() {
+        this.orderCompletion = !orderCompletion;
     }
     public boolean getOrderCompletion() {
         return orderCompletion;
     }
-    public void addCustomer(Customer customer) {
-        orderList.add(customer);
+    public void addItem(MenuItem item) {
+        MenuItems.add(item);
+    }
+    public void randomItem(int amountOfItems) {
+        int itemId = (int)((Math.random() * amountOfItems) + 1);
+        for (MenuItem item: MenuItems) {
+            if (itemId == item.getItemID()) {
+                this.orderedItem = item;
+            }
+        }
     }
 }
 
