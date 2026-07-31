@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 public class Customer {
     private static int idCounter = 1;
