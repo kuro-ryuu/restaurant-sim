@@ -17,6 +17,7 @@ public class Cashier {
         this.busy = false;
         this.queue = new LinkedList<>();
         this.totalBusyTime = 0;
+        this.currentCustomer = null;
     }
     public int getId() {
         return id;

@@ -37,9 +37,6 @@ public class Customer {
     public void setCashierServiceStartTime(long time) {
         this.cashierServiceStartTime = time;
     }
-    public void setFoodPreparationStartTime(long time) {
-        this.kitchenServiceStartTime = time;
-    }
     @Override
     public String toString() {
         return "Customer " + id;

@@ -17,6 +17,7 @@ public class FoodStation {
         this.busy = false;
         this.queue = new LinkedList<>();
         this.totalBusyTime = 0;
+        this.currentTask = null;
     }
     public int getId() {
         return id;
@@ -46,6 +47,15 @@ public class FoodStation {
         this.busy = true;
         this.busyStartTime = time;
         this.currentTask = task;
+    }
+    public KitchenTask EndTask(long time) {
+        if (busy) {
+            totalBusyTime += (time - busyStartTime);
+        }
+        this.busy = false;
+        KitchenTask finished = currentTask;
+        this.currentTask = null;
+        return finished;
     }
 }
 
