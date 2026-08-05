@@ -48,6 +48,11 @@ public class FoodStation {
         this.busyStartTime = time;
         this.currentTask = task;
     }
+
+    public long getBusyStartTime() {
+        return busyStartTime;
+    }
+
     public KitchenTask EndTask(long time) {
         if (busy) {
             totalBusyTime += (time - busyStartTime);
