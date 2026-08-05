@@ -42,6 +42,11 @@ public class FoodStation {
     public KitchenTask peek() {
         return queue.peek();
     }
+    public void startTask(KitchenTask task, long time) {
+        this.busy = true;
+        this.busyStartTime = time;
+        this.currentTask = task;
+    }
 }
 
 // TO DO: id, busy, currentOrder
