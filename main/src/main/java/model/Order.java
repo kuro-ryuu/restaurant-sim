@@ -3,19 +3,15 @@ import java.util.ArrayList;
 public class Order {
     private Customer customer;
     private ArrayList<MenuItem> MenuItems;
-    private boolean orderCompletion = false;
     private MenuItem orderedItem;
-    private int preparedCount = 0;
+    private int preparedCount;
+    private OrderState state;
     
     public Order(Customer customer) {
         this.customer = customer;
         MenuItems = new ArrayList<>();
-    }
-    public void changeState() {
-        this.orderCompletion = !orderCompletion;
-    }
-    public boolean getOrderCompletion() {
-        return orderCompletion;
+        this.preparedCount = 0;
+        this.state = OrderState.PLACED;
     }
     public void addItem(MenuItem item) {
         MenuItems.add(item);
@@ -23,7 +19,7 @@ public class Order {
     public void completedItemCount() {
         preparedCount++;
     }
-    public void randomItem(int amountOfItems) {
+    public void generateRandomOrder(int amountOfItems) {
         int itemId = (int)((Math.random() * amountOfItems) + 1);
         for (MenuItem item: MenuItems) {
             if (itemId == item.getItemID()) {
