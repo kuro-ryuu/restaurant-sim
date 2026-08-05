@@ -7,10 +7,10 @@ public class FoodStation {
     private int id;
     private static int idCounter = 1;
     private boolean busy;
-    private Queue<Customer> queue;
+    private Queue<KitchenTask> queue;
     private long totalBusyTime;
     private long busyStartTime;
-    private Customer currentCustomer;
+    private KitchenTask currentTask;
     
     public FoodStation() {
         this.id = idCounter++;
@@ -24,31 +24,23 @@ public class FoodStation {
     public boolean isBusy() {
         return busy;
     }
-    public Customer getCurrentCustomer() {
-        return currentCustomer;
+    public KitchenTask getCurrentTask() {
+        return currentTask;
     }
-    public Queue<Customer> getQueue() {
+    public Queue<KitchenTask> getQueue() {
         return queue;
     }
     public long getTotalBusyTime() {
         return totalBusyTime;
     }
-    public void enqueue(Customer customer) {
-        queue.add(customer);
-        customer.setState(CustomerState.WAITING_IN_CASHIER_QUEUE);
+    public void enqueue(KitchenTask task) {
+        queue.add(task);
     }
-    public Customer dequeue() {
+    public KitchenTask dequeue() {
         return queue.poll();
     }
-    public Customer peek() {
+    public KitchenTask peek() {
         return queue.peek();
-    }
-    public void startService(Menu task, MenuItem item.getPrepTime) {
-        this.busy = true;
-        this.currentCustomer = customer;
-        this.busyStartTime = time;
-        customer.setState(CustomerState.BEING_SERVED);
-        customer.setCashierServiceStartTime(time);
     }
 }
 

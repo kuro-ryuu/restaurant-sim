@@ -50,4 +50,11 @@ public class Cashier {
         customer.setState(CustomerState.BEING_SERVED);
         customer.setCashierServiceStartTime(time);
     }
+    public void endService(long time) {
+        if (busy) {
+            totalBusyTime += (time - busyStartTime);
+        }
+        this.busy = false;
+        this.currentCustomer = null;
+    }
 }

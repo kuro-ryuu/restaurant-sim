@@ -8,7 +8,6 @@ public class Customer {
     private long departureTime;
     private Order order;
     private long cashierServiceStartTime;
-    private long kitchenServiceStartTime;
     public Customer(long arrivalTime) {
         this.id = idCounter++;
         this.state = CustomerState.ARRIVING;
