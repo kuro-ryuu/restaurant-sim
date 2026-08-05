@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Optional;
 
 public class RestaurantModel {
@@ -66,5 +67,19 @@ public class RestaurantModel {
 
     public Optional<FoodStation> findAvailableFoodStation() {
         return foodStations.stream().filter(station -> !station.isBusy()).findFirst();
+=======
+
+public class RestaurantModel {
+    private List<Cashier> cashiers;
+    private List<FoodStation> foodStations;
+    private List<Customer> customers;
+    private List<Order> orders;
+    public RestaurantModel() {
+        cashiers = new ArrayList<>();
+        foodStations = new ArrayList<>();
+        customers = new ArrayList<>();
+        orders = new ArrayList<>();
+>>>>>>> 73e6216 (add new cashiers, foodStations, customers and orders list to the RestaurantModel class)
     }
 }
+
