@@ -7,6 +7,7 @@ public class MenuItem {
     public MenuItem(String itemName, int prepTime, StationType stationType) {
         this.itemID = itemID;
         this.prepTime = prepTime;
+        this.stationType = stationType;
     }
     public int getItemID() {
         return itemID;

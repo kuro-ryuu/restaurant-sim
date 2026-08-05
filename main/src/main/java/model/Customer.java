@@ -8,6 +8,7 @@ public class Customer {
     private long departureTime;
     private Order order;
     private long cashierServiceStartTime;
+    private long kitchenServiceStartTime;
     public Customer(long arrivalTime) {
         this.id = idCounter++;
         this.state = CustomerState.ARRIVING;
@@ -36,6 +37,9 @@ public class Customer {
     }
     public void setCashierServiceStartTime(long time) {
         this.cashierServiceStartTime = time;
+    }
+    public void setFoodPreparationStartTime(long time) {
+        this.kitchenServiceStartTime = time;
     }
     @Override
     public String toString() {

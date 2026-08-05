@@ -5,6 +5,7 @@ import java.util.Queue;
 
 public class Cashier {
     private int id;
+    private static int idCounter = 1;
     private boolean busy;
     private Customer currentCustomer;
     private Queue<Customer> queue;
@@ -12,7 +13,7 @@ public class Cashier {
     private long busyStartTime;
 
     public Cashier() {
-        this.id = id;
+        this.id = idCounter++;
         this.busy = false;
         this.queue = new LinkedList<>();
         this.totalBusyTime = 0;
