@@ -13,6 +13,9 @@ public class RestaurantCtrl {
     private final RestaurantView view;
     private long currentTime;
     private static final long CASHIER_SERVICE_TIME = 5;
+    private long minTime;
+    private long maxTime;
+    private long nextArrivalTime;
 
     // STATISTICS ( for display at the end :) )
     private int totalServed = 0;
@@ -31,17 +34,31 @@ public class RestaurantCtrl {
     public void initialize(int cashierCount) {
         model.initialize(cashierCount);
         currentTime = 0;
+        nextArrivalTime = 0;
+        scheduleNextArrival();
         totalServed = 0;
         totalResponseTime = 0;
         refreshView();
     }
 
-    public Customer createCustomer(long minTime, long maxTime) {
-        long interval = (long)(Math.random() * maxTime - minTime + 1) + minTime;
-        currentTime += interval;
-        Customer customer = new Customer(currentTime);
-        model.addCustomer(customer);
-        return customer;
+    public void scheduleNextArrival() {
+        long interval = (long) (Math.random() * maxTime - minTime + 1) + minTime;
+        nextArrivalTime = currentTime + interval;
+    }
+
+    public void checkArrivals() {
+        if (currentTime >= nextArrivalTime) {
+            Customer customer = new Customer(currentTime);
+            model.addCustomer(customer);
+            placeOrder(customer);
+            queueCustomer(customer);
+            scheduleNextArrival();
+        }
+    }
+
+    public void setArrivalRange(long min, long max) {
+        this.minTime = min;
+        this.maxTime = max;
     }
 
     public Order placeOrder(Customer customer) {
@@ -71,6 +88,7 @@ public class RestaurantCtrl {
     }
 
     private void stepSimulation() {
+        checkArrivals();
         completeCashierServices();
         startCashierService();
         assignOrdersToStations();
