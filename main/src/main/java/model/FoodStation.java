@@ -13,7 +13,7 @@ public class FoodStation {
     private StationType stationType;
     private long preparationTime;
     private KitchenTask currentTask;
-    
+
     public FoodStation(StationType stationType) {
         this.id = idCounter++;
         this.busy = false;
@@ -21,33 +21,43 @@ public class FoodStation {
         this.totalBusyTime = 0;
         this.currentTask = null;
     }
+
     public int getId() {
         return id;
     }
+
     public boolean isBusy() {
         return busy;
     }
+
     public KitchenTask getCurrentTask() {
         return currentTask;
     }
+
     public Queue<KitchenTask> getQueue() {
         return queue;
     }
+
     public long getTotalBusyTime() {
         return totalBusyTime;
     }
+
     public StationType getStationType() {
         return stationType;
     }
+
     public void enqueue(KitchenTask task) {
         queue.add(task);
     }
+
     public KitchenTask dequeue() {
         return queue.poll();
     }
+
     public KitchenTask peek() {
         return queue.peek();
     }
+
     public void startTask(KitchenTask task, long time) {
         this.busy = true;
         this.busyStartTime = time;
@@ -67,8 +77,13 @@ public class FoodStation {
         this.currentTask = null;
         return finished;
     }
+
     public static void resetCounter() {
         idCounter = 1;
+    }
+
+    public boolean hasQueuedTasks() {
+        return !queue.isEmpty();
     }
 }
 

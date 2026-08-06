@@ -84,6 +84,7 @@ public class RestaurantCtrl {
         startCashierService();
         assignOrdersToStations();
         completeStationTasks();
+        startStationTasks();
     }
 
     private void startCashierService() {
@@ -155,8 +156,13 @@ public class RestaurantCtrl {
         return model;
     }
 
-    public void startSimulation() {
-        
+    public void startStationTasks() {
+        for (FoodStation station: model.getFoodStations()) {
+            if (!station.isBusy() && station.hasQueuedTasks()) {
+            KitchenTask task = station.dequeue();
+            station.startTask(task, currentTime);
+        }
+        }
     }
 
     @FXML
