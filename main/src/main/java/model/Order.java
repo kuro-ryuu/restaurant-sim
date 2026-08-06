@@ -10,12 +10,22 @@ public class Order {
     private MenuItem orderedItem;
     private int preparedCount;
     private OrderState state;
+    private boolean itemsSent;
 
     public Order(Customer customer) {
         this.customer = customer;
         this.menuItems = new ArrayList<>();
         this.preparedCount = 0;
         this.state = OrderState.PLACED;
+        this.itemsSent = false;
+    }
+
+    public boolean getItemsSent() {
+        return itemsSent;
+    }
+
+    public void setItemsSent(boolean sent) {
+        this.itemsSent = sent;
     }
 
     public Customer getCustomer() {
@@ -53,14 +63,13 @@ public class Order {
     public void completedItemCount() {
         preparedCount++;
     }
-
-    public void generateRandomOrder(int amountOfItems) {
-        int itemId = (int) ((Math.random() * amountOfItems) + 1);
-        for (MenuItem item : menuItems) {
-            if (itemId == item.getItemID()) {
-                this.orderedItem = item;
-                break;
-            }
-        }
+    public boolean isComplete() {
+        return !menuItems.isEmpty() && preparedCount >= menuItems.size();
+    }
+    public int getRemainingCount() {
+        return menuItems.size() - preparedCount;
+    }
+    public void markItemPrepared() {
+        preparedCount++;
     }
 }

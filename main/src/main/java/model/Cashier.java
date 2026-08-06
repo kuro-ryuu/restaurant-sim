@@ -48,6 +48,7 @@ public class Cashier {
         this.busy = true;
         this.currentCustomer = customer;
         this.busyStartTime = time;
+        
         customer.setState(CustomerState.BEING_SERVED);
         customer.setCashierServiceStartTime(time);
     }
@@ -62,5 +63,8 @@ public class Cashier {
         }
         this.busy = false;
         this.currentCustomer = null;
+    }
+    public static void resetCounter() {
+        idCounter = 1;
     }
 }

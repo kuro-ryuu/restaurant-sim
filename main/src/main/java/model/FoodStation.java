@@ -10,9 +10,11 @@ public class FoodStation {
     private Queue<KitchenTask> queue;
     private long totalBusyTime;
     private long busyStartTime;
+    private StationType stationType;
+    private long preparationTime;
     private KitchenTask currentTask;
     
-    public FoodStation() {
+    public FoodStation(StationType stationType) {
         this.id = idCounter++;
         this.busy = false;
         this.queue = new LinkedList<>();
@@ -34,6 +36,9 @@ public class FoodStation {
     public long getTotalBusyTime() {
         return totalBusyTime;
     }
+    public StationType getStationType() {
+        return stationType;
+    }
     public void enqueue(KitchenTask task) {
         queue.add(task);
     }
@@ -53,7 +58,7 @@ public class FoodStation {
         return busyStartTime;
     }
 
-    public KitchenTask EndTask(long time) {
+    public KitchenTask endTask(long time) {
         if (busy) {
             totalBusyTime += (time - busyStartTime);
         }
@@ -61,6 +66,9 @@ public class FoodStation {
         KitchenTask finished = currentTask;
         this.currentTask = null;
         return finished;
+    }
+    public static void resetCounter() {
+        idCounter = 1;
     }
 }
 

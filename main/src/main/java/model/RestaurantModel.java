@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Optional;
 
 public class RestaurantModel {
@@ -12,25 +11,21 @@ public class RestaurantModel {
     private final List<Order> orders = new ArrayList<>();
     private final Menu menu = new Menu();
 
-    public RestaurantModel() {
-    }
-
-    public RestaurantModel(int cashierCount, int stationCount) {
-        initialize(cashierCount, stationCount);
-    }
-
-    public void initialize(int cashierCount, int stationCount) {
+    public void initialize(int cashierCount) {
         orderingCounters.clear();
         foodStations.clear();
         customers.clear();
         orders.clear();
+        FoodStation.resetCounter();
+        Cashier.resetCounter();
 
         for (int i = 0; i < cashierCount; i++) {
             orderingCounters.add(new Cashier());
         }
-        for (int i = 0; i < stationCount; i++) {
-            foodStations.add(new FoodStation());
-        }
+
+        foodStations.add(new FoodStation(StationType.CHICKEN));
+        foodStations.add(new FoodStation(StationType.RICE));
+        foodStations.add(new FoodStation(StationType.FRIES));
     }
 
     public List<Cashier> getOrderingCounters() {
@@ -64,22 +59,13 @@ public class RestaurantModel {
     public Optional<Cashier> findAvailableCashier() {
         return orderingCounters.stream().filter(cashier -> !cashier.isBusy()).findFirst();
     }
-
-    public Optional<FoodStation> findAvailableFoodStation() {
-        return foodStations.stream().filter(station -> !station.isBusy()).findFirst();
-=======
-
-public class RestaurantModel {
-    private List<Cashier> cashiers;
-    private List<FoodStation> foodStations;
-    private List<Customer> customers;
-    private List<Order> orders;
-    public RestaurantModel() {
-        cashiers = new ArrayList<>();
-        foodStations = new ArrayList<>();
-        customers = new ArrayList<>();
-        orders = new ArrayList<>();
->>>>>>> 73e6216 (add new cashiers, foodStations, customers and orders list to the RestaurantModel class)
+    public FoodStation findStation(StationType type) {
+        for (FoodStation foodStation: foodStations) {
+            if (foodStation.getStationType() == type) {
+                return foodStation;
+            }
+        }
+        return null;
     }
 }
 

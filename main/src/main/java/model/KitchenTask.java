@@ -2,15 +2,15 @@ package model;
 
 public class KitchenTask {
     private Order order;
-    private Menu menu;
-    public KitchenTask(Order order, Menu menu) {
+    private MenuItem item;
+    public KitchenTask(Order order, MenuItem item) {
         this.order = order;
-        this.menu = menu;
+        this.item = item;
     }
-    public Order order() {
+    public Order getOrder() {
         return order;
     }
-    public Menu menu() {
-        return menu;
+    public MenuItem getItem() {
+        return item;
     }
 }

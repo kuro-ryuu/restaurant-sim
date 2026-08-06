@@ -20,7 +20,7 @@ public class RestaurantView {
         for (FoodStation station : model.getFoodStations()) {
             System.out.printf("  Station %d: busy=%s, queue=%d, current=%s\n",
                     station.getId(), station.isBusy(), station.getQueue().size(),
-                    station.getCurrentTask() == null ? "none" : station.getCurrentTask().order());
+                    station.getCurrentTask() == null ? "none" : station.getCurrentTask().getItem().getName());
         }
 
         System.out.println("Customers and orders:");

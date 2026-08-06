@@ -22,6 +22,10 @@ public class RestaurantCtrl {
     private long currentTime;
     private static final long CASHIER_SERVICE_TIME = 5;
 
+    // STATISTICS ( for display at the end :) )
+    private int totalServed = 0;
+    private long totalResponseTime = 0;
+
     public RestaurantCtrl() {
         this(new RestaurantModel(), new RestaurantView());
     }
@@ -32,8 +36,8 @@ public class RestaurantCtrl {
         this.currentTime = 0;
     }
 
-    public void initialize(int cashierCount, int stationCount) {
-        model.initialize(cashierCount, stationCount);
+    public void initialize(int cashierCount) {
+        model.initialize(cashierCount);
         currentTime = 0;
         refreshView();
     }
@@ -46,7 +50,7 @@ public class RestaurantCtrl {
 
     public Order placeOrder(Customer customer) {
         Order order = new Order(customer);
-        List<MenuItem> items = model.getMenu().getRandomItemCount();
+        List<MenuItem> items = model.getMenu().generateRandomOrder();
         items.forEach(order::addItem);
         if (!items.isEmpty()) {
             order.setOrderedItem(items.get(0));
@@ -88,10 +92,6 @@ public class RestaurantCtrl {
                 Customer customer = cashier.dequeue();
                 if (customer != null) {
                     cashier.startService(customer, currentTime);
-                    if (customer.getOrder() != null) {
-                        customer.getOrder().setState(OrderState.PREPARING);
-                        customer.setState(CustomerState.WAITING_FOR_FOOD);
-                    }
                 }
             }
         }
@@ -114,31 +114,33 @@ public class RestaurantCtrl {
 
     private void assignOrdersToStations() {
         for (Order order : model.getOrders()) {
-            if (order.getState() == OrderState.PREPARING && order.getOrderedItem() != null && !isOrderInProgress(order)) {
-                Optional<FoodStation> station = model.findAvailableFoodStation();
-                station.ifPresent(available -> available.startTask(new KitchenTask(order, model.getMenu()), currentTime));
+            if (order.getState() == OrderState.PREPARING && !order.getItemsSent()) {
+                for (MenuItem item: order.getMenuItems()) {
+                    FoodStation station = model.findStation(item.getStationType());
+                    KitchenTask task = new KitchenTask(order, item);
+                    station.enqueue(task);
+                }
+            order.setItemsSent(true);
             }
         }
-    }
-
-    private boolean isOrderInProgress(Order order) {
-        return model.getFoodStations().stream()
-            .anyMatch(station -> station.isBusy() && station.getCurrentTask() != null && station.getCurrentTask().order() == order);
     }
 
     private void completeStationTasks() {
         for (FoodStation station : model.getFoodStations()) {
             if (station.isBusy() && station.getCurrentTask() != null) {
                 KitchenTask task = station.getCurrentTask();
-                MenuItem item = task.order().getOrderedItem();
+                MenuItem item = task.getItem();
                 if (item != null && currentTime - station.getBusyStartTime() >= item.getPrepTime()) {
-                    station.EndTask(currentTime);
-                    Order order = task.order();
-                    order.setState(OrderState.READY);
-                    Customer customer = order.getCustomer();
-                    if (customer != null) {
-                        customer.setState(CustomerState.SERVED);
-                        customer.setDepartureTime(currentTime);
+                    KitchenTask finished = station.endTask(currentTime);
+                    Order order = finished.getOrder();
+                    order.markItemPrepared();
+                    if (order.isComplete()) {
+                        order.setState(OrderState.READY);
+                        Customer c = order.getCustomer();
+                        c.setState(CustomerState.SERVED);
+                        c.setDepartureTime(currentTime);
+                        totalServed++;
+                        totalResponseTime += c.getDepartureTime() - c.getArrivalTime();
                     }
                 }
             }
@@ -153,8 +155,12 @@ public class RestaurantCtrl {
         return model;
     }
 
+    public void startSimulation() {
+        
+    }
+
     @FXML
     public void onStartSimulation() {
-        initialize(2, 3);
+        initialize(2);
     }
 }
