@@ -31,10 +31,14 @@ public class RestaurantCtrl {
     public void initialize(int cashierCount) {
         model.initialize(cashierCount);
         currentTime = 0;
+        totalServed = 0;
+        totalResponseTime = 0;
         refreshView();
     }
 
-    public Customer createCustomer() {
+    public Customer createCustomer(long minTime, long maxTime) {
+        long interval = (long)(Math.random() * maxTime - minTime + 1) + minTime;
+        currentTime += interval;
         Customer customer = new Customer(currentTime);
         model.addCustomer(customer);
         return customer;

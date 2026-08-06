@@ -22,7 +22,6 @@ public class RestaurantModel {
         for (int i = 0; i < cashierCount; i++) {
             orderingCounters.add(new Cashier());
         }
-
         foodStations.add(new FoodStation(StationType.CHICKEN));
         foodStations.add(new FoodStation(StationType.RICE));
         foodStations.add(new FoodStation(StationType.FRIES));
