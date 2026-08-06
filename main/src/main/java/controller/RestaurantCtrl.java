@@ -42,7 +42,7 @@ public class RestaurantCtrl {
     }
 
     public void scheduleNextArrival() {
-        long interval = (long) (Math.random() * maxTime - minTime + 1) + minTime;
+        long interval = (long) (Math.random() * (maxTime - minTime + 1)) + minTime;
         nextArrivalTime = currentTime + interval;
     }
 
@@ -158,7 +158,7 @@ public class RestaurantCtrl {
     }
 
     public void refreshView() {
-        view.render(model);
+        view.render(model, currentTime);
     }
 
     public RestaurantModel getModel() {

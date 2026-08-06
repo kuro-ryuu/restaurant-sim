@@ -1,11 +1,12 @@
 package view;
 
 import model.*;
-
+import controller.*;
 public class RestaurantView {
-    public void render(RestaurantModel model) {
+    public void render(RestaurantModel model, long currentTime) {
         System.out.println("\n--- Restaurant Simulation State ---");
-        System.out.println("Cashiers:");
+        System.out.printf("\n--- Clock: %d ---", currentTime);
+        System.out.println("\nCashiers:");
         for (Cashier cashier : model.getOrderingCounters()) {
             System.out.printf("  Cashier %d: busy=%s, queue=%d, current=%s\n",
                     cashier.getId(), cashier.isBusy(), cashier.getQueue().size(),
