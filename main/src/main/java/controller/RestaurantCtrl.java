@@ -1,15 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import model.Cashier;
-import model.Customer;
-import model.CustomerState;
-import model.FoodStation;
-import model.KitchenTask;
-import model.MenuItem;
-import model.Order;
-import model.OrderState;
-import model.RestaurantModel;
+import model.*;
 import view.RestaurantView;
 
 import java.util.Comparator;
@@ -59,7 +51,7 @@ public class RestaurantCtrl {
 
     public void queueCustomer(Customer customer) {
         Optional<Cashier> cashier = model.getOrderingCounters().stream()
-            .min(Comparator.comparingInt(c -> c.getQueue().size()));
+                .min(Comparator.comparingInt(c -> c.getQueue().size()));
         cashier.ifPresent(target -> target.enqueue(customer));
     }
 
@@ -113,12 +105,12 @@ public class RestaurantCtrl {
     private void assignOrdersToStations() {
         for (Order order : model.getOrders()) {
             if (order.getState() == OrderState.PREPARING && !order.getItemsSent()) {
-                for (MenuItem item: order.getMenuItems()) {
+                for (MenuItem item : order.getMenuItems()) {
                     FoodStation station = model.findStation(item.getStationType());
                     KitchenTask task = new KitchenTask(order, item);
                     station.enqueue(task);
                 }
-            order.setItemsSent(true);
+                order.setItemsSent(true);
             }
         }
     }
@@ -154,11 +146,11 @@ public class RestaurantCtrl {
     }
 
     private void startStationTasks() {
-        for (FoodStation station: model.getFoodStations()) {
+        for (FoodStation station : model.getFoodStations()) {
             if (!station.isBusy() && station.hasQueuedTasks()) {
-            KitchenTask task = station.dequeue();
-            station.startTask(task, currentTime);
-        }
+                KitchenTask task = station.dequeue();
+                station.startTask(task, currentTime);
+            }
         }
     }
 
