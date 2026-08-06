@@ -52,9 +52,6 @@ public class RestaurantCtrl {
         Order order = new Order(customer);
         List<MenuItem> items = model.getMenu().generateRandomOrder();
         items.forEach(order::addItem);
-        if (!items.isEmpty()) {
-            order.setOrderedItem(items.get(0));
-        }
         customer.setOrder(order);
         model.addOrder(order);
         return order;
@@ -156,7 +153,7 @@ public class RestaurantCtrl {
         return model;
     }
 
-    public void startStationTasks() {
+    private void startStationTasks() {
         for (FoodStation station: model.getFoodStations()) {
             if (!station.isBusy() && station.hasQueuedTasks()) {
             KitchenTask task = station.dequeue();

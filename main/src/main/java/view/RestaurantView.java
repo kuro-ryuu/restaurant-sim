@@ -1,10 +1,6 @@
 package view;
 
-import model.Cashier;
-import model.Customer;
-import model.FoodStation;
-import model.Order;
-import model.RestaurantModel;
+import model.*;
 
 public class RestaurantView {
     public void render(RestaurantModel model) {
@@ -18,16 +14,25 @@ public class RestaurantView {
 
         System.out.println("Food stations:");
         for (FoodStation station : model.getFoodStations()) {
-            System.out.printf("  Station %d: busy=%s, queue=%d, current=%s\n",
-                    station.getId(), station.isBusy(), station.getQueue().size(),
+            System.out.printf("  Station %s: busy=%s, queue=%d, current=%s\n",
+                    station.getStationType(), station.isBusy(), station.getQueue().size(),
                     station.getCurrentTask() == null ? "none" : station.getCurrentTask().getItem().getName());
         }
 
         System.out.println("Customers and orders:");
         for (Customer customer : model.getCustomers()) {
             Order order = customer.getOrder();
-            String orderDesc = order == null ? "none" : order.getState() + " item=" +
-                    (order.getOrderedItem() == null ? "none" : order.getOrderedItem().getName());
+            String orderDesc;
+            if (order == null) {
+                orderDesc = "none";
+            } 
+            else {
+                String items = "";
+                for (MenuItem item : order.getMenuItems()) {
+                    items += item.getName() + " ";
+                }
+                orderDesc = order.getState() + " [" + items + "] " + order.getPreparedCount() + "/" + order.getMenuItems().size();
+            }
             System.out.printf("  %s: state=%s, arrival=%d, departure=%d, order=[%s]\n",
                     customer, customer.getState(), customer.getArrivalTime(),
                     customer.getDepartureTime(), orderDesc);

@@ -20,6 +20,7 @@ public class FoodStation {
         this.queue = new LinkedList<>();
         this.totalBusyTime = 0;
         this.currentTask = null;
+        this.stationType = stationType;
     }
 
     public int getId() {
