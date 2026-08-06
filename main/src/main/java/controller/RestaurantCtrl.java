@@ -63,12 +63,10 @@ public class RestaurantCtrl {
         if (ticks <= 0) {
             return;
         }
-
         for (long i = 0; i < ticks; i++) {
             currentTime++;
             stepSimulation();
         }
-
         refreshView();
     }
 
@@ -156,6 +154,10 @@ public class RestaurantCtrl {
                 station.startTask(task, currentTime);
             }
         }
+    }
+
+    public long getCurrentTime() {
+        return currentTime;
     }
 
     @FXML
