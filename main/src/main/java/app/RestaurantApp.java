@@ -2,6 +2,7 @@ package app;
 
 import controller.RestaurantCtrl;
 import model.RestaurantModel;
+import model.ResultWriter;
 import view.RestaurantView;
 
 public class RestaurantApp {
@@ -25,5 +26,6 @@ public class RestaurantApp {
                 System.out.println("The thread was interrupted while sleeping!");
             }
         }
+        ResultWriter.saveResults("results.csv", controller.getModel().getCustomers(), simDuration, controller.getTotalServed(), controller.getAvgResponseTime());
     }
 }

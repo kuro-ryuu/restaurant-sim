@@ -160,6 +160,18 @@ public class RestaurantCtrl {
     public void refreshView() {
         view.render(model, currentTime);
     }
+    
+    public int getTotalServed() {
+        return totalServed;
+    }
+
+    public double getAvgResponseTime() {
+        if (totalServed > 0) {
+            double result = (double) totalResponseTime / totalServed;
+            return result;
+        }
+        return 0;
+    }
 
     public RestaurantModel getModel() {
         return model;
