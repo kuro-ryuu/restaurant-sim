@@ -8,7 +8,7 @@ import java.util.List;
 public class ResultWriter {
     public static void saveResults(String filename, List<Customer> customers, long simDuration, int totalServed, double avgResponseTime) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("id, arrival, departure, responseTime, state\n");
+            writer.write("\nid, arrival, departure, responseTime, state\n");
             for (Customer c : customers) {
                 if (c.getDepartureTime() > 0) {
                     long response = c.getDepartureTime() - c.getArrivalTime();
