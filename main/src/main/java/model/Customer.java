@@ -8,11 +8,54 @@ public class Customer {
     private long departureTime;
     private Order order;
     private long cashierServiceStartTime;
+    private double x;
+    private double y;
+    private boolean moving;
+    private double destinationX;
+    private double destinationY;
+    private double speed = 3;
 
     public Customer(long arrivalTime) {
         this.id = idCounter++;
         this.state = CustomerState.ARRIVING;
         this.arrivalTime = arrivalTime;
+    }
+
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setTarget(double x, double y) {
+        destinationX = x;
+        destinationY = y;
+        moving = true;
+    }
+
+    public void updateCustomer() {
+        if (!moving) {
+            return;
+        }
+        double dx = destinationX - getX();
+        double dy = destinationY - getY();
+        double distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+        if (distance <= speed) {
+            moving = false;
+            setPosition(destinationX, destinationY);
+        }
+        else {
+            double newX = getX() + speed;
+            double newY = getY() + speed;
+            setPosition(newX, newY);
+        }
     }
 
     public int getId() {

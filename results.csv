@@ -37,3 +37,24 @@ Summary
 Duration, 50
 Total Served, 7
 Avg Response Time, 15.00
+
+Simulation 3
+
+id, arrival, departure, responseTime, state
+1, 1, 18, 17, SERVED
+2, 3, 24, 21, SERVED
+3, 8, 20, 12, SERVED
+4, 11, 30, 19, SERVED
+5, 18, 26, 8, SERVED
+6, 22, 38, 16, SERVED
+7, 24, N/A, N/A, WAITING_FOR_FOOD
+8, 31, 43, 12, SERVED
+9, 37, 48, 11, SERVED
+10, 44, N/A, N/A, WAITING_FOR_FOOD
+11, 46, N/A, N/A, BEING_SERVED
+12, 48, N/A, N/A, BEING_SERVED
+
+Summary
+Duration, 50
+Total Served, 8
+Avg Response Time, 14.50

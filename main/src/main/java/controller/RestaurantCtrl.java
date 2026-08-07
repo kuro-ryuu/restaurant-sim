@@ -21,6 +21,9 @@ public class RestaurantCtrl {
     private int totalServed = 0;
     private long totalResponseTime = 0;
 
+    double cashierX = 100;
+    double cashierY = 100;
+
     public RestaurantCtrl() {
         this(new RestaurantModel(), new RestaurantView());
     }
@@ -97,7 +100,7 @@ public class RestaurantCtrl {
     }
 
     private void startCashierService() {
-        for (Cashier cashier : model.getOrderingCounters()) {
+        for (Cashier cashier: model.getOrderingCounters()) {
             if (!cashier.isBusy() && !cashier.getQueue().isEmpty()) {
                 Customer customer = cashier.dequeue();
                 if (customer != null) {
@@ -193,5 +196,26 @@ public class RestaurantCtrl {
     @FXML
     public void onStartSimulation() {
         initialize(2);
+    }
+
+    private void setCustomerTarget(Customer customer) {
+        switch (customer.getState()) {
+            case ARRIVING, WAITING_IN_CASHIER_QUEUE -> {
+                int idx = findCashierIndex(customer);
+                customer.setTarget(cashierX + (idx * 100), cashierY);
+            }
+            case 
+        }
+    }
+
+    private int findCashierIndex(Customer customer) {
+        int index = 0;
+        for (Cashier cashier: model.getOrderingCounters()) {
+            if (cashier.getCurrentCustomer() == customer) {
+                return index;
+            }
+            index++;
+        }
+        return 0;
     }
 }
