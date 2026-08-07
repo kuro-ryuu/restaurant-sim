@@ -12,7 +12,7 @@ public class ResultWriter {
             for (Customer c : customers) {
                 if (c.getDepartureTime() > 0) {
                     long response = c.getDepartureTime() - c.getArrivalTime();
-                    writer.write(c.getId() + "," + c.getArrivalTime() + "," + c.getDepartureTime() + "," + response + "," + c.getState() + "\n");
+                    writer.write(c.getId() + ", " + c.getArrivalTime() + ", " + c.getDepartureTime() + ", " + response + ", " + c.getState() + "\n");
                 }
                 else {
                 writer.write(c.getId() + ", " + c.getArrivalTime() + ", N/A" + ", N/A, " + c.getState() + "\n");
