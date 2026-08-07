@@ -204,7 +204,9 @@ public class RestaurantCtrl {
                 int idx = findCashierIndex(customer);
                 customer.setTarget(cashierX + (idx * 100), cashierY);
             }
-            case 
+            case BEING_SERVED -> {
+                
+            }
         }
     }
 
