@@ -18,7 +18,7 @@ public class Menu {
         return items.get((int)(Math.random() * items.size()));
     }
     public List<MenuItem> generateRandomOrder() {
-        int count = (int)(Math.random() * items.size() + 1);
+        int count = (int)(Math.random() * items.size()) + 1;
         List<MenuItem> selected = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             selected.add(getRandomItem());

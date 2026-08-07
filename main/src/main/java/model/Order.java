@@ -60,9 +60,6 @@ public class Order {
         menuItems.add(item);
     }
 
-    public void completedItemCount() {
-        preparedCount++;
-    }
     public boolean isComplete() {
         return !menuItems.isEmpty() && preparedCount >= menuItems.size();
     }

@@ -2,7 +2,6 @@ package view;
 
 
 import model.*;
-import controller.*;
 public class RestaurantView {
    
     public void render(RestaurantModel model, long currentTime) {

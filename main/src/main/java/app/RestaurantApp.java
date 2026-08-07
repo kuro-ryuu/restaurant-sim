@@ -1,6 +1,5 @@
 package app;
 
-import java.io.FileWriter;
 import controller.RestaurantCtrl;
 import model.RestaurantModel;
 import model.ResultWriter;
@@ -11,9 +10,7 @@ public class RestaurantApp {
     private static int speedMs = 1000;
     private static int simulationSpeed = 13;
     public static void main(String[] args) {
-        for (int simulation = 1; ; simulation++){
-            System.out.println("\nSimulation " + simulation);
-        
+        ResultWriter.loadLastId("results.csv"); 
         RestaurantView view = new RestaurantView();
         RestaurantModel model = new RestaurantModel();
         RestaurantCtrl controller = new RestaurantCtrl(model, view);
@@ -29,8 +26,6 @@ public class RestaurantApp {
                 System.out.println("The thread was interrupted while sleeping!");
             }
         }
-        
-        ResultWriter.saveResults("results.csv",  controller.getModel().getCustomers(), simDuration, controller.getTotalServed(), controller.getAvgResponseTime(), simulation);
-        }
+        ResultWriter.saveResults("results.csv", controller.getModel().getCustomers(), simDuration, controller.getTotalServed(), controller.getAvgResponseTime());
     }
 }
