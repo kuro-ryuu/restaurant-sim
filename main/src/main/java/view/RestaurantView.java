@@ -1,8 +1,10 @@
 package view;
 
+
 import model.*;
 import controller.*;
 public class RestaurantView {
+   
     public void render(RestaurantModel model, long currentTime) {
         System.out.println("\n--- Restaurant Simulation State ---");
         System.out.printf("\n--- Clock: %d ---", currentTime);
@@ -40,4 +42,5 @@ public class RestaurantView {
         }
         System.out.println("-----------------------------------\n");
     }
+
 }

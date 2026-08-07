@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class ResultWriter {
-    public static void saveResults(String filename, List<Customer> customers, long simDuration, int totalServed, double avgResponseTime) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+    public static void saveResults(String filename, List<Customer> customers, long simDuration, int totalServed, double avgResponseTime, int simulation) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+            writer.write("Simulation " + simulation + "\n");
             writer.write("\nid, arrival, departure, responseTime, state\n");
             for (Customer c : customers) {
                 if (c.getDepartureTime() > 0) {
@@ -27,4 +28,10 @@ public class ResultWriter {
             e.printStackTrace();
         }
     }
+    public static void clearResults(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }    
 }

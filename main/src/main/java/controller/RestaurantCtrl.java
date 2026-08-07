@@ -194,4 +194,8 @@ public class RestaurantCtrl {
     public void onStartSimulation() {
         initialize(2);
     }
+    public void onClearResults() {
+        ResultWriter.clearResults("results.csv");
+        System.out.println("Results cleared");
+    }
 }
