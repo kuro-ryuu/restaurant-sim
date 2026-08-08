@@ -13,7 +13,7 @@ public class RestaurantApp {
         ResultWriter.loadLastId("results.csv"); 
         RestaurantView view = new RestaurantView();
         RestaurantModel model = new RestaurantModel();
-        RestaurantCtrl controller = new RestaurantCtrl(model, view);
+        RestaurantCtrl controller = new RestaurantCtrl();
         controller.initialize(2);
         controller.setArrivalRange(2, 7);
         while (controller.getCurrentTime() < simDuration) {

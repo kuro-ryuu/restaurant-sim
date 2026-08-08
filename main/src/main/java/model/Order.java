@@ -20,6 +20,10 @@ public class Order {
         this.itemsSent = false;
     }
 
+    public void resetCounter() {
+        this.preparedCount = 0;
+    }
+
     public boolean getItemsSent() {
         return itemsSent;
     }

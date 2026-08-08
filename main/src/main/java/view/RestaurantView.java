@@ -2,7 +2,12 @@ package view;
 
 
 import model.*;
+import javafx.scene.image.Image;
+import javafx.scene.canvas.GraphicsContext;
 public class RestaurantView {
+    private Image cashier;
+    private Image customer;
+    
    
     public void render(RestaurantModel model, long currentTime) {
         System.out.println("\n--- Restaurant Simulation State ---");

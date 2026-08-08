@@ -1,16 +1,12 @@
 package controller;
 
-import javafx.fxml.FXML;
 import model.*;
-import view.RestaurantView;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 public class RestaurantCtrl {
     private final RestaurantModel model;
-    private final RestaurantView view;
     private long currentTime;
     private static final long CASHIER_SERVICE_TIME = 5;
     private long minTime;
@@ -21,27 +17,22 @@ public class RestaurantCtrl {
     private int totalServed = 0;
     private long totalResponseTime = 0;
 
-    double cashierX = 100;
-    double cashierY = 100;
+    double cashierX = 2;
+    double cashierY = 8;
 
     public RestaurantCtrl() {
-        this(new RestaurantModel(), new RestaurantView());
-    }
-
-    public RestaurantCtrl(RestaurantModel model, RestaurantView view) {
-        this.model = model;
-        this.view = view;
+        this.model = new RestaurantModel();;
         this.currentTime = 0;
     }
 
     public void initialize(int cashierCount) {
+        Customer.resetCounter();
         model.initialize(cashierCount);
         currentTime = 0;
         nextArrivalTime = 0;
         scheduleNextArrival();
         totalServed = 0;
         totalResponseTime = 0;
-        refreshView();
     }
 
     public void scheduleNextArrival() {
@@ -55,6 +46,7 @@ public class RestaurantCtrl {
             model.addCustomer(customer);
             placeOrder(customer);
             queueCustomer(customer);
+            setCustomerTarget(customer);
             scheduleNextArrival();
         }
     }
@@ -87,7 +79,6 @@ public class RestaurantCtrl {
             currentTime++;
             stepSimulation();
         }
-        refreshView();
     }
 
     private void stepSimulation() {
@@ -100,11 +91,12 @@ public class RestaurantCtrl {
     }
 
     private void startCashierService() {
-        for (Cashier cashier: model.getOrderingCounters()) {
+        for (Cashier cashier : model.getOrderingCounters()) {
             if (!cashier.isBusy() && !cashier.getQueue().isEmpty()) {
                 Customer customer = cashier.dequeue();
                 if (customer != null) {
                     cashier.startService(customer, currentTime);
+                    setCustomerTarget(customer);
                 }
             }
         }
@@ -119,6 +111,7 @@ public class RestaurantCtrl {
                     if (customer.getOrder() != null) {
                         customer.getOrder().setState(OrderState.PREPARING);
                         customer.setState(CustomerState.WAITING_FOR_FOOD);
+                        setCustomerTarget(customer);
                     }
                 }
             }
@@ -152,6 +145,7 @@ public class RestaurantCtrl {
                         Customer c = order.getCustomer();
                         c.setState(CustomerState.SERVED);
                         c.setDepartureTime(currentTime);
+                        setCustomerTarget(c);
                         totalServed++;
                         totalResponseTime += c.getDepartureTime() - c.getArrivalTime();
                     }
@@ -160,10 +154,6 @@ public class RestaurantCtrl {
         }
     }
 
-    public void refreshView() {
-        view.render(model, currentTime);
-    }
-    
     public int getTotalServed() {
         return totalServed;
     }
@@ -193,31 +183,35 @@ public class RestaurantCtrl {
         return currentTime;
     }
 
-    @FXML
-    public void onStartSimulation() {
-        initialize(2);
-    }
-
     private void setCustomerTarget(Customer customer) {
         switch (customer.getState()) {
             case ARRIVING, WAITING_IN_CASHIER_QUEUE -> {
                 int idx = findCashierIndex(customer);
-                customer.setTarget(cashierX + (idx * 100), cashierY);
+                customer.setTarget(cashierX + (idx * 120), cashierY);
             }
             case BEING_SERVED -> {
-                
+
+            }
+            case WAITING_FOR_FOOD -> {
+
             }
         }
     }
 
     private int findCashierIndex(Customer customer) {
         int index = 0;
-        for (Cashier cashier: model.getOrderingCounters()) {
+        for (Cashier cashier : model.getOrderingCounters()) {
             if (cashier.getCurrentCustomer() == customer) {
                 return index;
             }
             index++;
         }
         return 0;
+    }
+
+    public void updateCustomers() {
+        for (Customer c : model.getCustomers()) {
+            c.updatePosition(3);
+        }
     }
 }
