@@ -1,14 +1,13 @@
 package view;
 
-
 import model.*;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
+
 public class RestaurantView {
     private Image cashier;
     private Image customer;
-    
-   
+
     public void render(RestaurantModel model, long currentTime) {
         System.out.println("\n--- Restaurant Simulation State ---");
         System.out.printf("\n--- Clock: %d ---", currentTime);
@@ -32,13 +31,13 @@ public class RestaurantView {
             String orderDesc;
             if (order == null) {
                 orderDesc = "none";
-            } 
-            else {
+            } else {
                 String items = "";
                 for (MenuItem item : order.getMenuItems()) {
                     items += item.getName() + " ";
                 }
-                orderDesc = order.getState() + " [" + items + "] " + order.getPreparedCount() + "/" + order.getMenuItems().size();
+                orderDesc = order.getState() + " [" + items + "] " + order.getPreparedCount() + "/"
+                        + order.getMenuItems().size();
             }
             System.out.printf("  %s: state=%s, arrival=%d, departure=%d, order=[%s]\n",
                     customer, customer.getState(), customer.getArrivalTime(),
@@ -46,5 +45,4 @@ public class RestaurantView {
         }
         System.out.println("-----------------------------------\n");
     }
-
 }

@@ -23,25 +23,22 @@ public class SimulationCtrl {
     private Button pauseButton;
     @FXML
     private Slider simSpeed;
-    @FXML
-    private 
-    @FXML
-
-    @FXML
+    
 
     private GraphicsContext gc;
     private RestaurantCtrl simulation;
     private AnimationTimer timer;
+    private RestaurantView view;
     private boolean running = false;
     private int simDuration = 50;
     
     public void handle(long now) {
-
+        
     }
 
     public void initialize() {
         gc = canvas.getGraphicsContext2D();
         simulation = new RestaurantCtrl();
-        this.view = new RestaurantView();
+        view = new RestaurantView();
     }
 }
